@@ -1,0 +1,21 @@
+.button {
+    display: flex;
+    align-items: center;
+    background: var(--color-black);
+    border: 0;
+    color: #fff;
+    border-radius: 9999px;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: opacity 300ms ease;
+}
+
+.button svg {
+    margin-right: 8px;
+}
+
+.button:hover {
+    opacity: 0.85;
+}

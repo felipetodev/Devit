@@ -1,0 +1,20 @@
+.grid {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+.main {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    width: 100%;
+}
+
+@media (min-width: 520px) {
+    .main {
+        height: 90vh;
+        width: 500px;
+    }
+}
