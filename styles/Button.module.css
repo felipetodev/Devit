@@ -10,6 +10,12 @@
     padding: 8px 24px;
     cursor: pointer;
     transition: opacity 300ms ease;
+    -webkit-user-select: none;
+}
+
+.button[disabled] {
+    pointer-events: none;
+    opacity: 0.4;
 }
 
 .button svg {
