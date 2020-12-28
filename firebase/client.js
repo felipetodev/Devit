@@ -52,25 +52,38 @@ export const addDevit = ({ avatar, content, img, userId, userName }) => {
   })
 }
 
-export const fetchLatestDevits = () => {
+const mapDevitFromFirebaseToDevitObject = doc => {
+  const data = doc.data()
+  const id = doc.id
+  const { createdAt } = data
+
+  return {
+    ...data,
+    id,
+    createdAt: +createdAt.toDate(),
+  }
+}
+
+export const listenLatestDevits = (callback) => {
   return db
     .collection('devits')
     .orderBy('createdAt', 'desc')
-    .get()
-    .then(({ docs }) => {
-      return docs.map(doc => {
-        const data = doc.data()
-        const id = doc.id
-        const { createdAt } = data
-
-        return {
-          ...data,
-          id,
-          createdAt: +createdAt.toDate(),
-        }
-      })
+    .limit(20)
+    .onSnapshot(({ docs }) => {
+      const newDevits = docs.map(mapDevitFromFirebaseToDevitObject)
+      callback(newDevits)
     })
 }
+
+// export const fetchLatestDevits = () => {
+//   return db
+//     .collection('devits')
+//     .orderBy('createdAt', 'desc')
+//     .get()
+//     .then(({ docs }) => {
+//       return docs.map(mapDevitFromFirebaseToDevitObject)
+//     })
+// }
 
 export const uploadImage = (file) => {
   const ref = firebase.storage().ref(`images/${file.name}`)

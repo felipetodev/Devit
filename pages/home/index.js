@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
-import { fetchLatestDevits } from "../../firebase/client";
+import { listenLatestDevits } from "../../firebase/client";
 import Create from "../../components/Icons/Create";
 import Home from "../../components/Icons/Home";
 import Search from "../../components/Icons/Search";
@@ -14,8 +14,12 @@ export default function HomePage() {
     const user = useUser()
 
     useEffect(() => {
-        user && fetchLatestDevits()
-            .then(setTimeline)
+        let unsubscribe
+        if(user) {
+            unsubscribe = listenLatestDevits(setTimeline)
+        }
+        return () => unsubscribe && unsubscribe()
+
     }, [user])
 
     return (
